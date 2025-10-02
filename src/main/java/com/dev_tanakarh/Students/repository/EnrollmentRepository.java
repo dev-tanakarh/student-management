@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface EnrollmentRepository extends JpaRepository<Enrollment, Long> {
-    List<Enrollment> findByStudent(Student student);
-    List<Enrollment> findByCourse(Course course);
-    List<Enrollment> findByStudentAndCourse(Student student, Course course);
+    List<Enrollment> findByStudent(Student student); //return all student enrollments
+    List<Enrollment> findByCourse(Course course); //return all course enrollments
+    List<Enrollment> findByStudentAndCourse(Student student, Course course); //Return all enrollments of a student and course
 }
