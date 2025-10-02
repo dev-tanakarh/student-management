@@ -2,10 +2,16 @@ package com.dev_tanakarh.Students.domain.entities;
 
 
 import jakarta.persistence.*;
+import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Table(name = "courses")
 public class Course {
 
@@ -20,6 +26,11 @@ public class Course {
     @Column(name = "code", nullable = false, unique = true)
     private String code;
 
-    @OneToMany(mappedBy = "student", cascade = {CascadeType.REMOVE, CascadeType.PERSIST})
-    List<Enrollment> enrollments;
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Builder.Default
+    private List<Enrollment> enrollments = new ArrayList<>();
+
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Builder.Default
+    private List<ExamResult> examResults = new ArrayList<>();
 }
