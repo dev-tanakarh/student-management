@@ -8,6 +8,7 @@ import com.dev_tanakarh.Students.mappers.StudentMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.stream.Collectors;
 
 @Component
@@ -41,7 +42,8 @@ public class StudentMapperImpl implements StudentMapper {
                 student.getFirstName(),
                 student.getLastName(),
                 student.getEmail(),
-                student.getEnrollments().stream()
+                student.getEnrollments() == null ?
+                new ArrayList<>() : student.getEnrollments().stream()
                         .map(enrollment -> courseMapper.toSummaryDto(enrollment.getCourse()))
                         .collect(Collectors.toList())
         );
