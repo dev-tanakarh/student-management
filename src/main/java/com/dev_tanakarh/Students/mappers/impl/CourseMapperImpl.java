@@ -4,7 +4,9 @@ import com.dev_tanakarh.Students.domain.dto.CourseDto;
 import com.dev_tanakarh.Students.domain.dto.CourseSummaryDto;
 import com.dev_tanakarh.Students.domain.entities.Course;
 import com.dev_tanakarh.Students.mappers.CourseMapper;
+import org.springframework.stereotype.Component;
 
+@Component
 public class CourseMapperImpl implements CourseMapper {
     @Override
     public Course toEntity(CourseDto courseDto) {

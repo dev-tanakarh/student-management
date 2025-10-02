@@ -5,7 +5,9 @@ import com.dev_tanakarh.Students.domain.entities.Course;
 import com.dev_tanakarh.Students.domain.entities.Enrollment;
 import com.dev_tanakarh.Students.domain.entities.Student;
 import com.dev_tanakarh.Students.mappers.EnrollmentMapper;
+import org.springframework.stereotype.Component;
 
+@Component
 public class EnrolllmentMapperImpl implements EnrollmentMapper {
     @Override
     public Enrollment toEntity(EnrollmentDto enrollmentDto, Student student, Course course) {

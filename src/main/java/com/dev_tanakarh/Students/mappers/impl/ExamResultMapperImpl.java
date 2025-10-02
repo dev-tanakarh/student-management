@@ -6,8 +6,10 @@ import com.dev_tanakarh.Students.domain.entities.Course;
 import com.dev_tanakarh.Students.domain.entities.ExamResult;
 import com.dev_tanakarh.Students.domain.entities.Student;
 import com.dev_tanakarh.Students.mappers.ExamResultMapper;
+import org.springframework.stereotype.Component;
 
-public class ExamResultMapperimpl implements ExamResultMapper {
+@Component
+public class ExamResultMapperImpl implements ExamResultMapper {
     @Override
     public ExamResult toEntity(ExamResultDto examResultDto, Student student, Course course) {
         return ExamResult.builder()
