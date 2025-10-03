@@ -21,6 +21,13 @@ public class ExamResultMapperImpl implements ExamResultMapper {
 
     @Override
     public ExamResultDetailsDto toDetailsDto(ExamResult examResult) {
-        return null;
+        return new ExamResultDetailsDto(
+                examResult.getId(),
+                examResult.getStudent().getId(),
+                examResult.getStudent().getFirstName() + " " + examResult.getStudent().getLastName(),
+                examResult.getCourse().getId(),
+                examResult.getCourse().getTitle(),
+                examResult.getGrade()
+        );
     }
 }

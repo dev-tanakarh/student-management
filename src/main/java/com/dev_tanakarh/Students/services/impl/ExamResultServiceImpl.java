@@ -1,5 +1,6 @@
 package com.dev_tanakarh.Students.services.impl;
 
+import com.dev_tanakarh.Students.domain.dto.ExamResultDetailsDto;
 import com.dev_tanakarh.Students.domain.dto.ExamResultDto;
 import com.dev_tanakarh.Students.domain.entities.Course;
 import com.dev_tanakarh.Students.domain.entities.ExamResult;
@@ -24,32 +25,48 @@ public class ExamResultServiceImpl implements ExamResultService {
     private final ExamResultMapper examResultMapper;
 
     @Override
-    public ExamResult addExamResult(ExamResultDto examResultDto) {
+    public ExamResultDetailsDto addExamResult(ExamResultDto examResultDto) {
+        // Find the student by ID from the DTO
         Student student = studentRepository.findById(examResultDto.studentId())
                 .orElseThrow(() -> new IllegalArgumentException("Student Not Found"));
+
+        // Find the course by ID from the DTO
         Course course = courseRepository.findById(examResultDto.courseId())
                 .orElseThrow(() -> new IllegalArgumentException("Course Not Found"));
+
+        // Map the DTO to an ExamResult entity
         ExamResult examResult = examResultMapper.toEntity(examResultDto, student, course);
 
-        return examResultRepository.save(examResult);
+        // Save the ExamResult entity to the database
+        ExamResult createdExamResult = examResultRepository.save(examResult);
+
+        // Map the saved entity to a detailed DTO and return it
+        return examResultMapper.toDetailsDto(createdExamResult);
     }
 
+
     @Override
-    public List<ExamResult> getResultsForStudent(Long studentId) {
+    public List<ExamResultDetailsDto> getResultsForStudent(Long studentId) {
         Student student = studentRepository.findById(studentId).
                 orElseThrow(() -> new IllegalArgumentException("Student Not Found"));
-        return examResultRepository.findByStudent(student);
+        return examResultRepository.findByStudent(student)
+                .stream()
+                .map(examResultMapper::toDetailsDto)
+                .toList();
     }
 
     @Override
-    public List<ExamResult> getResultsForCourse(Long courseId) {
+    public List<ExamResultDetailsDto> getResultsForCourse(Long courseId) {
         Course course = courseRepository.findById(courseId).
                 orElseThrow(() -> new IllegalArgumentException("Course Not Found"));
-        return examResultRepository.findByCourse(course);
+        return examResultRepository.findByCourse(course)
+                .stream()
+                .map(examResultMapper::toDetailsDto)
+                .toList();
     }
 
     @Override
-    public ExamResult updateResult(Long id, ExamResultDto dto) {
+    public ExamResultDetailsDto updateResult(Long id, ExamResultDto dto) {
         ExamResult existing = examResultRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Exam Result Not Found"));
         Student student = studentRepository.findById(dto.studentId())
@@ -60,8 +77,11 @@ public class ExamResultServiceImpl implements ExamResultService {
         existing.setStudent(student);
         existing.setCourse(course);
         existing.setGrade(dto.grade());
-        return examResultRepository.save(existing);
+
+        ExamResult updated = examResultRepository.save(existing);
+        return examResultMapper.toDetailsDto(updated);  // <-- convert to DTO here
     }
+
 
     @Override
     public void deleteResult(Long id) {
