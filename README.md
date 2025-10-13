@@ -191,7 +191,7 @@ POST /exam-results
 📍 Bachelor of Computer Science (ICT) – Eden University, Zambia
 💼 Aspiring Software Engineer | Java + Spring Boot Developer
 🌐 [GitHub Profile](https://github.com/dev-tanakarh)
-📧 [tanaka@example.com](mailto:tanaka@tanakarh.dev@gmail.com)
+📧 [tanakarh.dev@gmail.com](mailto:tanaka@tanakarh.dev@gmail.com)
 
 ---
 
